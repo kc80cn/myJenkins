@@ -3,19 +3,19 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'echo "=======build stage ======="'
+                sh 'echo "======= build stage ======="'
             }
         }
 
         stage('test') {
             steps {
-                sh '======= test stage ======='
+                sh 'echo "======= test stage ======="'
             }
         }
 
         stage('deploy') {
             steps {
-                sh '======= deploy stage ======='
+                sh 'echo "======= deploy stage ======="'
             }
         }
 
