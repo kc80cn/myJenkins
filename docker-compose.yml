@@ -1,8 +1,8 @@
 version: '3'
-
+# image: jenkins-docker is built from Dockerfile in the folder jenkins-pipeline
 services:
   jenkins:
-    container_name: jenkins
+    container_name: jenkins-blue
     image: jenkins-docker
     build: 
       context: jenkins-pipeline 
@@ -14,58 +14,52 @@ services:
     networks:
        -  net
 
-  remotehost:
-    container_name: remotehost_srv_01
-    image: remote-host
-    build:
-      context: centos
-    volumes: 
-       -  $PWD/centos/backup_db_srcipt.sh:/tmp/backup_db_srcipt.sh
-    networks:
-       -  net
-  
-  db_host:
-    container_name: db_srv_01
-    image: mysql:5.7
-    environment: 
-      - "MYSQL_ROOT_PASSWORD=123456"
-    volumes: 
-      - "$PWD/db_data:/var/lib/mysql"
-    networks:
-      - net
-   
-  web_host:
-    container_name: web_srv_01
-    image: ansible-web:16092020
-    build:
-      context: jenkins-ansible/web_project
-    ports:
-      - "80:80"
-    networks:
-      - net      
-
-  gitlab_host:
-    container_name: gitlab_srv_01
-    image: 'gitlab/gitlab-ce:latest'
-    hostname: 'gitlab_srv_01'
-    ports:
-      - '8090:80'
-    volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
-    networks:
-      - net          
-
-#  gitlab_runner:
-#    container_name: gitlab_runner_01
-#    image: 'gitlab/gitlab-runner:latest'
-#    hostname: 'gitlab_runner_01'
-#    volumes:
-#      - '/srv/gitlab_runner/etc/gitlab-runner:/etc/gitlab-runner'
-#      - '/srv/gitlab_runner/home/gitlab-runner:/home/gitlab-runner'
-#    networks:
-#      - net       
-#
 networks:
   net:
+
+ # remotehost:
+ #   container_name: remotehost_srv_01
+ #   image: remote-host
+ #   build:
+ #     context: centos
+ #   volumes: 
+ #      -  $PWD/centos/backup_db_srcipt.sh:/tmp/backup_db_srcipt.sh
+ #   networks:
+ #      -  net
+ # 
+ # ====database host====
+ # db_host:
+ #   container_name: db_srv_01
+ #   image: mysql:5.7
+ #   environment: 
+ #     - "MYSQL_ROOT_PASSWORD=123456"
+ #   volumes: 
+ #     - "$PWD/db_data:/var/lib/mysql"
+ #   networks:
+ #     - net
+ #
+ #  ====web host====
+ # web_host:
+ #   container_name: web_srv_01
+ #   image: ansible-web:16092020
+ #   build:
+ #     context: jenkins-ansible/web_project
+ #   ports:
+ #     - "80:80"
+ #   networks:
+ #     - net      
+ #
+ #  ====local gitlab host====
+ # gitlab_host:
+ #   container_name: gitlab_srv_01
+ #   image: 'gitlab/gitlab-ce:latest'
+ #   hostname: 'gitlab_srv_01'
+ #   ports:
+ #     - '8090:80'
+ #   volumes:
+ #     - '/srv/gitlab/config:/etc/gitlab'
+ #     - '/srv/gitlab/logs:/var/log/gitlab'
+ #     - '/srv/gitlab/data:/var/opt/gitlab'
+ #   networks:
+ #     - net          
+
