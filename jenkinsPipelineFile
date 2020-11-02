@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-      parallel(
+      parallel{
         stage('build') {
             steps {
                 sh 'echo "======= build stage ======="'
@@ -13,7 +13,7 @@ pipeline {
                 sh 'echo "======= test stage ======="'
             }
         }
-        )
+        }
         stage('deploy') {
             steps {
                 sh 'echo "======= deploy stage ======="'
