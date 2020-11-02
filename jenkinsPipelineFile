@@ -1,43 +1,24 @@
 pipeline {
     agent any
-    environment {
-	WORKSPACE="/home/jenkins/jenkins-data/jenkins_home/workspace/pipeline-docker-maven"
-	PASS = credentials('hub.docker.com')
-	IMAGE = "maven-project"
-	}
     stages {
-        stage('Build') {
+        stage('build') {
             steps {
-		sh '''
-		./jenkins/build/01-mvn.sh mvn -B -D skipTests clean package
-		./jenkins/build/04-build.sh		
-		'''
-	        }
-            post {
-                success {
-           		 archiveArtifacts artifacts: 'java-app/target/*.jar', fingerprint: true
-       			}
-    		}	
-
-	}
-        stage('Test') {
-            steps {	
-                sh './jenkins/test/01-mvn-test.sh mvn test'
-		}
-	
+                sh 'echo "=======build stage ======="'
+            }
         }
-        stage('Push') {
+
+        stage('test') {
             steps {
-		sh './jenkins/push/push.sh'
-
-           	}
+                sh '======= test stage ======='
+            }
         }
-	stage('Deploy') {
+
+        stage('deploy') {
             steps {
-                sh './jenkins/deploy/deploy.sh'
-
-           	}
+                sh '======= deploy stage ======='
+            }
         }
+
+
     }
 }
-
