@@ -1,28 +1,29 @@
 pipeline {
-    agent any
-    stages {
-        stage('group stage'){
-          parallel{
-            stage('build') {
-                steps {
-                    sh 'echo "======= build stage ======="'
-                }
-            }
-
-            stage('test') {
-                steps {
-                    sh 'echo "======= test stage ======="'
-                }
-            }
+  agent any
+  stages {
+    stage('group stage') {
+      parallel {
+        stage('build') {
+          steps {
+            sh 'echo "======= build stage ======="'
           }
         }
 
-        stage('deploy') {
-            steps {
-                sh 'echo "======= deploy stage ======="'
-            }
+        stage('test') {
+          steps {
+            sh 'echo "======= test stage ======="'
+          }
         }
 
-
+      }
     }
+
+    stage('deploy') {
+      steps {
+        sh 'echo "======= deploy stage ======="'
+        writeFile(file: 'testfile', text: 'hello, testfile')
+      }
+    }
+
+  }
 }
