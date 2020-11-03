@@ -23,6 +23,7 @@ pipeline {
       parallel {
         stage('deploy') {
           steps {
+            input (message: 'do you want to proceed?', id:'ok')
             sh 'echo "======= deploy stage ======="'
           }
         }
