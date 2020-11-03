@@ -12,6 +12,7 @@ pipeline {
         stage('test') {
           steps {
             sh 'echo "======= test stage ======="'
+            writeFile(file: 'testfile.txt', text: 'hello, testfile')
           }
         }
 
@@ -23,7 +24,6 @@ pipeline {
         stage('deploy') {
           steps {
             sh 'echo "======= deploy stage ======="'
-            writeFile(file: 'testfile.txt', text: 'hello, testfile.txt')
           }
         }
 
