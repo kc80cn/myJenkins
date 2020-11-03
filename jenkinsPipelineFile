@@ -19,9 +19,20 @@ pipeline {
     }
 
     stage('deploy') {
-      steps {
-        sh 'echo "======= deploy stage ======="'
-        writeFile(file: 'testfile', text: 'hello, testfile')
+      parallel {
+        stage('deploy') {
+          steps {
+            sh 'echo "======= deploy stage ======="'
+            writeFile(file: 'testfile', text: 'hello, testfile')
+          }
+        }
+
+        stage('artifacts') {
+          steps {
+            archiveArtifacts 'archive.txt'
+          }
+        }
+
       }
     }
 
