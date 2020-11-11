@@ -5,7 +5,7 @@ services:
     container_name: jenkins-blue
     image: jenkins-docker
     build: 
-      context: jenkins-pipeline 
+    context: jenkins-docker-image
     ports:
        -  "8080:8080"
     volumes:
