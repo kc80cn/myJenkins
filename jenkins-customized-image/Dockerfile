@@ -3,18 +3,13 @@
 
 FROM jenkins/jenkins:2.249.3-slim
 USER root
+
 #---installing ansible and depenencies
-RUN apt-get update && \
-    apt-get install sshpass && \
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python get-pip.py && \
-    pip install ansible --upgrade && \
-    ansible-galaxy collection install community.general
+RUN apt-get -y  update && apt-get -y install sshpass && apt-get -y install python3 && apt-get -y install python3-pip
+RUN pip3 install ansible --upgrade && ansible-galaxy collection install community.general
 
 #---installing docker by script and docker-compose
-RUN curl -fsSL https://get.docker.com -o get-docker.sh && \
-    sh get-docker.sh && \
-    apt-get -y install docker-compose
+RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && apt-get -y install docker-compose
 	
 RUN usermod -aG docker jenkins
 USER jenkins
