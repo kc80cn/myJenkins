@@ -15,7 +15,7 @@ services:
        -  net_jenkins
 
 networks:
-  net:
+  net_jenkins:
 
  # remotehost:
  #   container_name: remotehost_srv_01
