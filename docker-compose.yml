@@ -2,17 +2,17 @@ version: '3'
 # image: jenkins-docker is built from Dockerfile in the folder jenkins-pipeline
 services:
   jenkins:
-    container_name: jenkins-blue
-    image: jenkins-docker
+    container_name: jenkins-blueocean
+    image: myjenkins-blueocean:1.1
     build: 
     context: jenkins-docker-image
     ports:
        -  "8080:8080"
     volumes:
-       -  "$PWD/jenkins_home:/var/jenkins_home"
+       -  "$PWD/jenkins_data:/var/jenkins_home"
        -  "/var/run/docker.sock:/var/run/docker.sock"
     networks:
-       -  net
+       -  net_jenkins
 
 networks:
   net:
