@@ -1,3 +1,5 @@
+#------use this Dockerfile to build an image
+
 FROM jenkins/jenkins:2.249.3-slim
 USER root
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
