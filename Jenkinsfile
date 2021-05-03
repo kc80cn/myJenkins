@@ -5,7 +5,9 @@ pipeline {
     tools{
     	maven "maven3.6"
     }	  
-    stage('Initialize') {
+    stages{
+    
+        stage('Initialize') {
           steps {
             sh 'echo "======= Initialize stage ======="'
 	    sh '''
@@ -21,6 +23,8 @@ pipeline {
 		mvn clean package
 		'''
           	}
-        }		
+        }	
+    
+    }	
 
 }
