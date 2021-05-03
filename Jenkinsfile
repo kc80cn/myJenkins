@@ -1,41 +1,26 @@
 pipeline {
+
   agent any
-  stages {
-    stage('group stage') {
-      parallel {
-        stage('build') {
+  
+    tools{
+    	maven "maven3.6"
+    }	  
+    stage('Initialize') {
           steps {
-            sh 'echo "======= build stage ======="'
-          }
+            sh 'echo "======= Initialize stage ======="'
+	    sh '''
+	    	echo $PATH
+		echo $M2_HOME
+		'''
+          	}
         }
-
-        stage('test') {
+    stage('Build') {
           steps {
-            sh 'echo "======= test stage ======="'
-            writeFile(file: 'testfile.txt', text: 'hello, testfile')
-          }
-        }
+            sh 'echo "======= Build stage ======="'
+	    sh '''
+		mvn clean package
+		'''
+          	}
+        }		
 
-      }
-    }
-
-    stage('deploy') {
-      parallel {
-        stage('deploy') {
-          steps {
-            input (message: 'do you want to proceed?', id:'ok')
-            sh 'echo "======= deploy stage ======="'
-          }
-        }
-
-        stage('artifacts') {
-          steps {
-            archiveArtifacts 'testfile.txt'
-          }
-        }
-
-      }
-    }
-
-  }
 }

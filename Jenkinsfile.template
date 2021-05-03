@@ -1,0 +1,41 @@
+pipeline {
+  agent any
+  stages {
+    stage('group stage') {
+      parallel {
+        stage('build') {
+          steps {
+            sh 'echo "======= build stage ======="'
+          }
+        }
+
+        stage('test') {
+          steps {
+            sh 'echo "======= test stage ======="'
+            writeFile(file: 'testfile.txt', text: 'hello, testfile')
+          }
+        }
+
+      }
+    }
+
+    stage('deploy') {
+      parallel {
+        stage('deploy') {
+          steps {
+            input (message: 'do you want to proceed?', id:'ok')
+            sh 'echo "======= deploy stage ======="'
+          }
+        }
+
+        stage('artifacts') {
+          steps {
+            archiveArtifacts 'testfile.txt'
+          }
+        }
+
+      }
+    }
+
+  }
+}
